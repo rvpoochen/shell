@@ -15,27 +15,22 @@ echo $x >> $Output_file
 
 #==============music info=================
 ID=0
+len=8
 getInfo()
 {
-File=""
-Question=""
-Answer=""
-
-str=$1
+str=`echo $1 | tr "*" " "`
+echo $str
 info=${str%.*}
 signer=${info%-*}
 songName=${info#*-}
-ss="$signer-$songName.mp3"
 #=====================
-if [ $ss != $str ]; then
-	echo $info
+if [ ${#signer} -gt $len ]; then
 	return
 fi
 
 #========get==========
 let "ID+=1"
 File=`printf "Music/%03d.mp3" $ID`
-len=8
 if [ ${#songName} -gt $len ];then
 	Question="歌手"
 	Answer=$signer
@@ -67,7 +62,7 @@ print "\t["
 
 for file_a in ${Folder_A}/*; do
 	temp_file=`basename $file_a`
-	echo $temp_file
+	temp_file=`echo $temp_file | tr " " "*"`
 	getInfo $temp_file
 done
 print "\t]"
