@@ -1,10 +1,9 @@
 #!/bin/sh
 #=============get the file name================
 Folder_A="/Users/cjh/work/shell/music/音乐包/音乐片段"
-Output_file="Index.json"
+Output_file="Index1.json"
 #==============================================
 mkdir Package1
-echo success make Package1
 cd Package1 && mkdir Music
 #=============print===================
 print()
@@ -43,9 +42,9 @@ fi
 print '\t\t{'
 print "\t\t\t\"ID\"\t\t: \"$ID\","
 print "\t\t\t\"File\"\t\t: \"$File\","
-print "\t\t\t\"Question\"\t: \"$Question\","
+print "\t\t\t\"Question\"\t\t: \"$Question\","
 print "\t\t\t\"Answer\"\t: \"$Answer\""
-print '\t\t},\n'
+print '\t\t},'
 
 #========copy=========
 cp "$Folder_A/$str" ./$File
@@ -65,5 +64,9 @@ for file_a in ${Folder_A}/*; do
 	temp_file=`echo $temp_file | tr " " "*"`
 	getInfo $temp_file
 done
-print "\t]"
-print '}'
+
+sed -e '$s/},/}/' $Output_file > Index.json
+rm -rf $Output_file
+
+echo "\t]" >> Index.json
+echo "}" >> Index.json
